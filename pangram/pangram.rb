@@ -7,11 +7,7 @@ class Pangram
     end
 
     def unique_letters_in(sentence)
-      sentence
-        .downcase
-        .split('')
-        .select { |char| char =~ /[a-z]/ }
-        .uniq
+      sentence.downcase.scan(/[a-z]/).uniq
     end
   end
 end
