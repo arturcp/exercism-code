@@ -8,7 +8,7 @@ class Squares
   end
 
   def square_of_sum
-    @number.downto(0).reduce(&:+) ** 2
+    @number.downto(1).reduce(0, &:+) ** 2
   end
 
   def sum_of_squares
