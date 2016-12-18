@@ -1,43 +1,25 @@
 class RunLengthEncoding
   def self.encode(input)
-    index = 0
-    result = ''
-    current_letter = input.empty? ? '' : input[0]
-
-    while index < input.length
-      count = 0
-      while index < input.length && input[index] == current_letter
-        index += 1
-        count += 1
-      end
-
-      result << (count == 1 ? current_letter : "#{count}#{current_letter}")
-      current_letter = input[index]
-    end
-
-    result
+    group_chars(input).map do |group|
+      group.length == 1 ? group.first : group.length.to_s + group.first
+    end.join
   end
 
   def self.decode(input)
-    index = 0
-    result = ''
-
-    while index < input.length
-      number = ''
-
-      while index < input.length && input[index].to_i != 0
-        number += input[index]
-        index += 1
-      end
-
-      number = 1 if number.empty?
-
-      result += input[index] * number.to_i
-      index += 1
-    end
-
-    result
+    split_chars(input).map do |number, char|
+      number.empty? ? char : char * number.to_i
+    end.join
   end
+
+  def self.group_chars(input)
+    input.chars.chunk_while { |a, b| a == b }.to_a
+  end
+
+  def self.split_chars(input)
+    input.scan(/(\d*)(\D{1})/)
+  end
+
+  private_class_method :group_chars, :split_chars
 end
 
 module BookKeeping
