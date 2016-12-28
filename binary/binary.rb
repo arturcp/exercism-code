@@ -1,9 +1,8 @@
 class Binary
   def self.to_decimal(binary)
-    chars = binary.chars
-    raise ArgumentError unless (chars - ['0', '1']).empty?
+    raise ArgumentError if binary =~ /[^0-1]/
 
-    chars.map.with_index(0) do |char, index|
+    binary.chars.map.with_index(0) do |char, index|
        char.to_i * 2 ** (binary.length - index - 1)
     end.reduce(:+)
   end
