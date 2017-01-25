@@ -1,6 +1,13 @@
 class Array
   def accumulate
-    self.map { |item| yield item }
+    result = []
+    index = 0
+    while index < length
+      result << yield(self[index])
+      index += 1
+    end
+
+    result
   end
 end
 
