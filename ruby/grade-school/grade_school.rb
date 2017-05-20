@@ -6,22 +6,19 @@ class School
   end
 
   def students(grade)
-    (students_board[grade] || []).sort
+    students_board.fetch(grade, [])
   end
 
   def students_by_grade
-    students_board.map do |grade, students|
-      {
-        grade: grade,
-        students: students.sort
-      }
-    end.sort_by { |grades| grades[:grade] }
+    students_board.sort.map do |grade, students|
+      { grade: grade, students: students.sort }
+    end
   end
 
   def add(name, grade)
-    students_board[grade] = [] unless students_board.include?(grade)
-
+    students_board[grade] ||= []
     students_board[grade] << name
+    students_board[grade].sort!
   end
 end
 
